@@ -38,11 +38,11 @@ extension ImagesVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? PhotoCVCell else {return}
-        cell.imageView.image = nil
-        collectionView.reloadData()
-    }
+//    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//        guard let cell = collectionView.cellForItem(at: indexPath) as? PhotoCVCell else {return}
+////        cell.imageView.image = nil
+//        collectionView.reloadData()
+//    }
 }
 
 extension ImagesVC {

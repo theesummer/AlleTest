@@ -45,11 +45,11 @@ extension PhotosViewerVC: UICollectionViewDelegate, UICollectionViewDataSource {
             return CGSize(width: 83, height: 32)
         }
     }
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? PhotoCVCell, collectionView == photoIndexCV else {return}
-        cell.imageView.image = nil
-        photoIndexCV.reloadData()
-    }
+//    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//        guard let cell = collectionView.cellForItem(at: indexPath) as? PhotoCVCell, collectionView == photoIndexCV else {return}
+////        cell.imageView.image = nil
+//        photoIndexCV.reloadData()
+//    }
 }
 
 extension PhotosViewerVC {
