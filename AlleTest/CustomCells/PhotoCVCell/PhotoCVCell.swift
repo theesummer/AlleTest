@@ -18,9 +18,20 @@ class PhotoCVCell: UICollectionViewCell {
 }
 
 extension PhotoCVCell {
-    class func updateCellFor(collectionView: UICollectionView, indexPath: IndexPath, image: UIImage, contentMode: ContentMode, selectedIndex: IndexPath?) -> PhotoCVCell {
+    class func updateCellFor(collectionView: UICollectionView, indexPath: IndexPath, imageURL: URL, contentMode: ContentMode, selectedIndex: IndexPath?) -> PhotoCVCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCVCell", for: indexPath) as! PhotoCVCell
-        cell.imageView.image = image
+//        DispatchQueue.global(qos: .userInteractive).async {
+//            do {
+//                let data = try Data(contentsOf: imageURL.path)
+//                DispatchQueue.main.async {
+//                    cell.imageView.image = UIImage(data: data)
+//                }
+//            } catch {
+//                print(error.localizedDescription)
+//            }
+//        }
+        
+        cell.imageView.image = UIImage(contentsOfFile: imageURL.path(percentEncoded: true))
         cell.imageView.contentMode = contentMode
         cell.addBorder(cell: cell, indexPath: indexPath, selectedIndex: selectedIndex)
         return cell

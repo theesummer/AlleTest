@@ -27,28 +27,35 @@ class PhotosViewerVC: UIViewController {
     @IBOutlet weak var readMore: UILabel!
     @IBOutlet weak var editTags: UILabel!
     
-    var images: [UIImage] = []
+    var imageURLs: [URL] = []
     var tags: [String] = ["Animal", "Rabbit"]
     var selectedIndex = IndexPath(item: 0, section: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.addGestures()
-        if self.images.count > 0 {
-            self.descriptionLabel.text = OCRManager().extractTextFrom(self.images[0]) ?? "Contents Unavailable"
-        }
-        photosCV.register(UINib(nibName: "PhotoCVCell", bundle: nil), forCellWithReuseIdentifier: "PhotoCVCell")
-        photoIndexCV.register(UINib(nibName: "PhotoCVCell", bundle: nil), forCellWithReuseIdentifier: "PhotoCVCell")
-        tagsCV.register(UINib(nibName: "TagCVCell", bundle: nil), forCellWithReuseIdentifier: "TagCVCell")
-//        self.photosCV.reloadData()
-        self.imageView.image = self.images[selectedIndex.item]
-        self.photoIndexCV.reloadData()
-//        self.photosCV.scrollToItem(at: self.selectedIndex, at: .left, animated: false)
+        self.photosCV.register(UINib(nibName: "PhotoCVCell", bundle: nil), forCellWithReuseIdentifier: "PhotoCVCell")
+        self.photoIndexCV.register(UINib(nibName: "PhotoCVCell", bundle: nil), forCellWithReuseIdentifier: "PhotoCVCell")
+        self.tagsCV.register(UINib(nibName: "TagCVCell", bundle: nil), forCellWithReuseIdentifier: "TagCVCell")
+        photoIndexCV.reloadData()
         photoIndexCV.layoutIfNeeded()
         self.photoIndexCV.scrollToItem(at: self.selectedIndex, at: .left, animated: false)
         self.photoIndexCV.selectItem(at: self.selectedIndex, animated: true, scrollPosition: .left)
         self.view.addDismissGesture()
-        
+        if self.imageURLs.count > 0 {
+            DispatchQueue.global(qos: .userInteractive).async {
+                do {
+                    let data = try Data(contentsOf: self.imageURLs[self.selectedIndex.item])
+                    DispatchQueue.main.async {
+                        guard let image = UIImage(data: data) else {return}
+                        self.imageView.image = image
+                        self.descriptionLabel.text = OCRManager().extractTextFrom(image) ?? "Contents Unavailable"
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         self.hideInfoView()
