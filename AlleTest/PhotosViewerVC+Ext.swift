@@ -11,14 +11,14 @@ extension PhotosViewerVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case self.tagsCV: return self.tags.count
-        default: return self.images.count
+        default: return self.imageURLs.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView {
-        case self.photosCV: return PhotoCVCell.updateCellFor(collectionView: self.photosCV, indexPath: indexPath, image: self.images[indexPath.item], contentMode: .scaleAspectFit, selectedIndex: nil)
-        case self.photoIndexCV: return PhotoCVCell.updateCellFor(collectionView: self.photoIndexCV, indexPath: indexPath, image: self.images[indexPath.item], contentMode: .scaleAspectFill, selectedIndex: self.selectedIndex)
+        case self.photosCV: return PhotoCVCell.updateCellFor(collectionView: self.photosCV, indexPath: indexPath, imageURL: self.imageURLs[indexPath.item], contentMode: .scaleAspectFit, selectedIndex: nil)
+        case self.photoIndexCV: return PhotoCVCell.updateCellFor(collectionView: self.photoIndexCV, indexPath: indexPath, imageURL: self.imageURLs[indexPath.item], contentMode: .scaleAspectFill, selectedIndex: self.selectedIndex)
         case self.tagsCV: return TagCVCell.updateCellFor(collectionView: self.tagsCV, indexPath: indexPath, name: self.tags[indexPath.item])
         default: return UICollectionViewCell()
         }
@@ -27,8 +27,9 @@ extension PhotosViewerVC: UICollectionViewDelegate, UICollectionViewDataSource {
         switch collectionView {
         case self.tagsCV: return
         default:
-            self.descriptionLabel.text = OCRManager().extractTextFrom(self.images[indexPath.item]) ?? "Contents Unavailable"
-            self.imageView.image = self.images[indexPath.item]
+            guard let image = UIImage(contentsOfFile: self.imageURLs[indexPath.item].path(percentEncoded: true)) else {return}
+            self.imageView.image = image
+            self.descriptionLabel.text = OCRManager().extractTextFrom(image) ?? "Contents Unavailable"
             self.selectedIndex = indexPath
             self.photoIndexCV.reloadData()
 //            self.photosCV.scrollToItem(at: indexPath, at: .left, animated: true)
@@ -43,6 +44,11 @@ extension PhotosViewerVC: UICollectionViewDelegate, UICollectionViewDataSource {
         default:
             return CGSize(width: 83, height: 32)
         }
+    }
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? PhotoCVCell, collectionView == photoIndexCV else {return}
+        cell.imageView.image = nil
+        photoIndexCV.reloadData()
     }
 }
 

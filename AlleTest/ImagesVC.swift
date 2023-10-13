@@ -10,7 +10,7 @@ import Photos
 
 class ImagesVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
-    var images: [UIImage] = []
+    var imageURLs: [URL] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,10 +22,10 @@ class ImagesVC: UIViewController {
 
 extension ImagesVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.images.count
+        return self.imageURLs.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return PhotoCVCell.updateCellFor(collectionView: self.collectionView, indexPath: indexPath, image: self.images[indexPath.item], contentMode: .scaleAspectFill, selectedIndex: nil)
+        return PhotoCVCell.updateCellFor(collectionView: self.collectionView, indexPath: indexPath, imageURL: self.imageURLs[indexPath.item], contentMode: .scaleAspectFill, selectedIndex: nil)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width/4 - 1, height: collectionView.frame.width/4 - 1)
@@ -33,14 +33,20 @@ extension ImagesVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "PhotosViewerVC") as! PhotosViewerVC
-        controller.images = self.images
+        controller.imageURLs = self.imageURLs
         controller.selectedIndex = indexPath
         self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? PhotoCVCell else {return}
+        cell.imageView.image = nil
+        collectionView.reloadData()
     }
 }
 
 extension ImagesVC {
-    fileprivate func fetchImages() {
+    fileprivate func importImages() {
         DispatchQueue.global(qos: .userInitiated).async {
             let imgageManager = PHImageManager.default()
             
@@ -57,20 +63,35 @@ extension ImagesVC {
             if fetchResult.count > 0 {
                 for i in 0..<fetchResult.count{
                     imgageManager.requestImage(for: fetchResult.object(at: i) as PHAsset, targetSize: CGSize(width:500, height: 500),contentMode: .aspectFill, options: requestOptions, resultHandler: { (image, error) in
-                        self.images.append(image!)
+                        guard let data = image?.jpegData(compressionQuality: 1) else {return}
+                        print("SKImageName: ", fetchResult[i].originalFilename)
+                        let filename = fetchResult[i].originalFilename.components(separatedBy: ".").first ?? "image"
+                        SKFileManager.shared.write(image: data, name: filename, fileType: .heic, directory: .images)
                     })
                 }
+                self.fetchImages()
             } else {
                 print("Unable to fetch photos")
                 DispatchQueue.main.async {
                     self.view.stopBasicLoading()
                 }
             }
-            
+        }
+    }
+    fileprivate func fetchImages() {
+        guard let urls = SKFileManager.shared.getFilesFrom(directory: .images) else {
+            self.importImages()
+            return
+        }
+        if urls.count > 0 {
+            self.imageURLs = urls
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
                 self.view.stopBasicLoading()
             }
+        } else {
+            self.importImages()
         }
+        
     }
 }
