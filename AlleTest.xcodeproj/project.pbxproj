@@ -15,6 +15,10 @@
 		67070C4D2AD2D6EB00DF46E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67070C4B2AD2D6EB00DF46E1 /* LaunchScreen.storyboard */; };
 		67070C552AD4019300DF46E1 /* OCRManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67070C542AD4019300DF46E1 /* OCRManager.swift */; };
 		67070C572AD406F500DF46E1 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67070C562AD406F500DF46E1 /* UIViewExtension.swift */; };
+		673702102ADAA1C100E89878 /* UIGraphicsRendererExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6737020F2ADAA1C100E89878 /* UIGraphicsRendererExtension.swift */; };
+		673702122ADAA33D00E89878 /* RenderingSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673702112ADAA33D00E89878 /* RenderingSource.swift */; };
+		673702142ADAA36800E89878 /* RenderingIncrementalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673702132ADAA36800E89878 /* RenderingIncrementalSource.swift */; };
+		673702162ADAA3A600E89878 /* RenderingOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673702152ADAA3A600E89878 /* RenderingOptions.swift */; };
 		677762032AD74F910011620F /* PhotosViewerVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677762022AD74F910011620F /* PhotosViewerVC+Ext.swift */; };
 		677762062AD7538F0011620F /* PhotoCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677762042AD7538F0011620F /* PhotoCVCell.swift */; };
 		677762072AD7538F0011620F /* PhotoCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 677762052AD7538F0011620F /* PhotoCVCell.xib */; };
@@ -40,6 +44,10 @@
 		67070C4E2AD2D6EB00DF46E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		67070C542AD4019300DF46E1 /* OCRManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRManager.swift; sourceTree = "<group>"; };
 		67070C562AD406F500DF46E1 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		6737020F2ADAA1C100E89878 /* UIGraphicsRendererExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIGraphicsRendererExtension.swift; sourceTree = "<group>"; };
+		673702112ADAA33D00E89878 /* RenderingSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderingSource.swift; sourceTree = "<group>"; };
+		673702132ADAA36800E89878 /* RenderingIncrementalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderingIncrementalSource.swift; sourceTree = "<group>"; };
+		673702152ADAA3A600E89878 /* RenderingOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderingOptions.swift; sourceTree = "<group>"; };
 		677762022AD74F910011620F /* PhotosViewerVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewerVC+Ext.swift"; sourceTree = "<group>"; };
 		677762042AD7538F0011620F /* PhotoCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCVCell.swift; sourceTree = "<group>"; };
 		677762052AD7538F0011620F /* PhotoCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoCVCell.xib; sourceTree = "<group>"; };
@@ -89,6 +97,10 @@
 				67070C442AD2D6EA00DF46E1 /* PhotosViewerVC.swift */,
 				677762092AD75B060011620F /* ImagesVC.swift */,
 				677762022AD74F910011620F /* PhotosViewerVC+Ext.swift */,
+				6737020F2ADAA1C100E89878 /* UIGraphicsRendererExtension.swift */,
+				673702112ADAA33D00E89878 /* RenderingSource.swift */,
+				673702132ADAA36800E89878 /* RenderingIncrementalSource.swift */,
+				673702152ADAA3A600E89878 /* RenderingOptions.swift */,
 				679D03162AD94A72007484FA /* SKFileManager.swift */,
 				67D0ACE82AD723180067AD73 /* CustomViews */,
 				67070C462AD2D6EA00DF46E1 /* Main.storyboard */,
@@ -225,6 +237,8 @@
 			files = (
 				679D03192AD94EAD007484FA /* PHAssetExtension.swift in Sources */,
 				6777620A2AD75B060011620F /* ImagesVC.swift in Sources */,
+				673702102ADAA1C100E89878 /* UIGraphicsRendererExtension.swift in Sources */,
+				673702142ADAA36800E89878 /* RenderingIncrementalSource.swift in Sources */,
 				67D0ACE02AD71FFC0067AD73 /* TagCVCell.swift in Sources */,
 				677762062AD7538F0011620F /* PhotoCVCell.swift in Sources */,
 				679D03172AD94A72007484FA /* SKFileManager.swift in Sources */,
@@ -232,11 +246,13 @@
 				67070C452AD2D6EA00DF46E1 /* PhotosViewerVC.swift in Sources */,
 				67D0ACE72AD7230E0067AD73 /* CollectionsPopUpView.swift in Sources */,
 				67D0ACEB2AD727710067AD73 /* RoundedButton.swift in Sources */,
+				673702162ADAA3A600E89878 /* RenderingOptions.swift in Sources */,
 				67D0ACDD2AD6FA340067AD73 /* RoundedView.swift in Sources */,
 				677762032AD74F910011620F /* PhotosViewerVC+Ext.swift in Sources */,
 				67070C412AD2D6EA00DF46E1 /* AppDelegate.swift in Sources */,
 				67070C552AD4019300DF46E1 /* OCRManager.swift in Sources */,
 				67070C432AD2D6EA00DF46E1 /* SceneDelegate.swift in Sources */,
+				673702122ADAA33D00E89878 /* RenderingSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

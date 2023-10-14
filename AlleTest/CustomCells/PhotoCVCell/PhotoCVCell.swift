@@ -30,8 +30,12 @@ extension PhotoCVCell {
 //                print(error.localizedDescription)
 //            }
 //        }
-        
-        cell.imageView.image = UIImage(contentsOfFile: imageURL.path(percentEncoded: true))
+        do {
+            cell.imageView.image = try UIGraphicsRenderer.renderImageAt(url: imageURL as NSURL, size: cell.imageView.frame.size, scale: 0.5)
+        } catch {
+            print(error)
+        }
+//        cell.imageView.image = UIImage(contentsOfFile: imageURL.path(percentEncoded: true))
         cell.imageView.contentMode = contentMode
         cell.addBorder(cell: cell, indexPath: indexPath, selectedIndex: selectedIndex)
         return cell
